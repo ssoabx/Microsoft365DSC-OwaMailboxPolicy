@@ -13,6 +13,9 @@
     FIXES [#7582](https://github.com/Microsoft365DSC/Microsoft365DSC/issues/7582)
 * IntuneDeviceEnrollmentStatusPageWindows10
   * Updated the delta report to compare without the PostProcessing scriptblock.
+* M365DSCPermissions
+  * Fixed `Update-M365DSCAzureAdApplication` failing with a bad request when an API
+    offers none of the requested permissions as application permission.
 * M365DSCResourceBase
   * Added the `ReportPostProcessing` compare parameter for report-time post-processing.
   * Updated empty collections to be treated as unset on properties with `ValidateNotNullOrEmpty`.

@@ -941,12 +941,6 @@ function Update-M365DSCAzureAdApplication
 
             if ($null -eq $appRole)
             {
-                $currentAPIAccess = $allRequiredAccess.($svcprincipal.AppId)
-
-                if ($null -eq $currentAPIAccess)
-                {
-                    $allRequiredAccess.Add(($svcprincipal.AppId), @())
-                }
                 $role = $svcPrincipal.AppRoles | Where-Object -Property Value -EQ $permission.PermissionName
                 if ($null -eq $role)
                 {
@@ -959,6 +953,7 @@ function Update-M365DSCAzureAdApplication
                     }
                     else
                     {
+                        Write-LogEntry "    API '$($permission.Api)' has no application permission '$($permission.PermissionName)'." -Type Warning
                         continue
                     }
                 }
@@ -968,6 +963,13 @@ function Update-M365DSCAzureAdApplication
                         id   = $role.Id
                         type = 'Role'
                     }
+                }
+
+                $currentAPIAccess = $allRequiredAccess.($svcprincipal.AppId)
+
+                if ($null -eq $currentAPIAccess)
+                {
+                    $allRequiredAccess.Add(($svcprincipal.AppId), @())
                 }
                 $allRequiredAccess.($svcprincipal.AppId) += $appPermission
             }
